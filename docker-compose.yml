@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  postgresql:
+    container_name: quickersim_postgresql
+    image: bitnami/postgresql:16.4.0
+    ports:
+     - '5432:5432'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_USERNAME=${DB_USER}
+      - POSTGRESQL_PASSWORD=${DB_PASSWORD}
+      - POSTGRESQL_DATABASE=${DB_NAME}
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+      - ./database:/docker-entrypoint-initdb.d
+   
+volumes:
+  postgresql_data:
+    driver: local
