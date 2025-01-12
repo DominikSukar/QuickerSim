@@ -1,7 +1,7 @@
-import datetime
+from datetime import date
 
 from pydantic import BaseModel
 
 class MassReading(BaseModel):
-    date: datetime.datetime
+    date: date
     mass: float
