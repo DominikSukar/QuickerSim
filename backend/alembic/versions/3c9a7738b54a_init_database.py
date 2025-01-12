@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.create_table('mass_readings',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
-    sa.Column('float', sa.Float(), nullable=False),
+    sa.Column('mass', sa.Float(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
