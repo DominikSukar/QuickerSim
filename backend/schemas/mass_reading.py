@@ -13,6 +13,7 @@ class MassReadingPut(BaseModel):
         return value
 
 class MassReading(MassReadingPut):
+    id: int
     date: date
 
     @field_validator("date")
