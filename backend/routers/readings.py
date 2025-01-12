@@ -26,7 +26,7 @@ async def post_reading(
         .first()
     )
     if existing_mass_reading:
-        existing_mass_reading.mass = mass_reading.mass
+        existing_mass_reading.mass = mass_reading_post.mass
         db.commit()
         db.refresh(existing_mass_reading)
 
