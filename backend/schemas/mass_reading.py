@@ -6,6 +6,12 @@ from pydantic import BaseModel, field_validator
 class MassReadingPut(BaseModel):
     mass: float
 
+    @field_validator("mass")
+    def validate_mass(cls, value):
+        print(f"XD {value}")
+        if value and value < 0:
+            raise ValueError("The mass must be greater than zero.")
+        return value
 
 class MassReading(MassReadingPut):
     date: date
