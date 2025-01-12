@@ -6,4 +6,4 @@ from routers import (
 
 app = FastAPI()
 
-app.include_router(readings.router, tags=["Account"], prefix="/account")
+app.include_router(readings.router, tags=["Readings"], prefix="/readings")
