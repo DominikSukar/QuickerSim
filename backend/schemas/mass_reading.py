@@ -3,7 +3,7 @@ from datetime import date
 from pydantic import BaseModel, field_validator
 
 
-class MassReadingPut(BaseModel):
+class MassReading(BaseModel):
     mass: float
 
     @field_validator("mass")
@@ -12,8 +12,8 @@ class MassReadingPut(BaseModel):
             raise ValueError("The mass must be greater than zero.")
         return value
 
-class MassReading(MassReadingPut):
-    id: int
+
+class MassAndDateReading(MassReading):
     date: date
 
     @field_validator("date")
@@ -21,3 +21,7 @@ class MassReading(MassReadingPut):
         if value and value > date.today():
             raise ValueError("The date cannot be in the future.")
         return value
+
+
+class Reading(MassAndDateReading):
+    id: int

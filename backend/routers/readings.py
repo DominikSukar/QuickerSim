@@ -4,7 +4,7 @@ from datetime import date
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 
-from schemas.mass_reading import MassReading, MassReadingPut
+from schemas.mass_reading import MassReading, MassAndDateReading, Reading
 from models._database import get_db
 from models.mass_reading import MassReading as MassReadingTable
 
@@ -12,14 +12,14 @@ router = APIRouter()
 
 
 @router.get("/")
-async def list_readings(db: Session = Depends(get_db)) -> List[MassReading]:
+async def list_readings(db: Session = Depends(get_db)) -> List[Reading]:
     return db.query(MassReadingTable).order_by(MassReadingTable.id)
 
 
 @router.post("/", status_code=201)
 async def post_reading(
-    mass_reading_post: MassReading, db: Session = Depends(get_db)
-) -> MassReading:
+    mass_reading_post: MassAndDateReading, db: Session = Depends(get_db)
+) -> Reading:
     existing_mass_reading = (
         db.query(MassReadingTable)
         .filter(MassReadingTable.date == mass_reading_post.date)
@@ -40,7 +40,7 @@ async def post_reading(
 
 
 @router.delete("/{date}/")
-async def delete_reading(date: date, db: Session = Depends(get_db)) -> MassReading:
+async def delete_reading(date: date, db: Session = Depends(get_db)) -> Reading:
     mass_reading = db.query(MassReadingTable).filter(MassReadingTable.date == date).first()
     if not mass_reading:
         raise HTTPException(status_code=404, detail="Mass not found")
@@ -52,7 +52,7 @@ async def delete_reading(date: date, db: Session = Depends(get_db)) -> MassReadi
 
 
 @router.put("/{date}/")
-async def put_reading(date: date, mass_reading_put: MassReadingPut, db: Session = Depends(get_db)) -> MassReading:
+async def put_reading(date: date, mass_reading_put: MassReading, db: Session = Depends(get_db)) -> Reading:
     mass_reading = db.query(MassReadingTable).filter(MassReadingTable.date == date).first()
     if not mass_reading:
         raise HTTPException(status_code=404, detail="Mass reading not found")
