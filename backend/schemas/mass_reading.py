@@ -2,6 +2,10 @@ from datetime import date
 
 from pydantic import BaseModel
 
-class MassReading(BaseModel):
-    date: date
+
+class MassReadingPut(BaseModel):
     mass: float
+
+
+class MassReading(MassReadingPut):
+    date: date
